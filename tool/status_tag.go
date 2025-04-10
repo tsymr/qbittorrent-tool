@@ -25,9 +25,16 @@ func StatusTag(c *config.Config, torrent *qbittorrent.Torrent) {
 			return
 		}
 
-		if custom, ok := c.StatusTag.MapConfig[tracker.Msg]; ok {
-			tag = custom
-		} else {
+		matched := false
+		for key, value := range c.StatusTag.MapConfig {
+			if strings.Contains(tracker.Msg, key) {
+				tag = value
+				matched = true
+				break
+			}
+		}
+
+		if !matched {
 			miss[tracker.Msg] += 1
 		}
 	}

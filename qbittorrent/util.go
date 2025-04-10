@@ -18,5 +18,8 @@ func (t *Torrent) GetTrackerHost() (string, error) {
 	}
 
 	split := strings.Split(parse.Host, ".")
+	if len(split) < 2 {
+		return parse.Host, nil
+	}
 	return fmt.Sprintf("%s.%s", split[len(split)-2], split[len(split)-1]), nil
 }

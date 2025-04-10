@@ -52,8 +52,19 @@ func (a *api) GetTorrentTrackers(hash string) ([]*TorrentTracker, error) {
 
 	i := 0
 	for _, item := range trackerList {
-		// tier >=0 的才有效
-		if item.Tier >= 0 {
+		// 根据tier的类型判断tracker是否有效
+		valid := false
+		switch v := item.Tier.(type) {
+		case float64:
+			valid = v >= 0
+		case int:
+			valid = v >= 0
+		case string:
+			// 如果tier是字符串，则认为tracker有效
+			valid = true
+		}
+
+		if valid {
 			trackerList[i] = item
 			i++
 		}
