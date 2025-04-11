@@ -29,6 +29,8 @@ func DomainTag(c *config.Config, torrent *qbittorrent.Torrent) {
 
 	if custom, ok := c.DomainTag.MapConfig[tag]; ok {
 		tag = custom
+	} else {
+		tag = "其他"
 	}
 
 	if strings.Contains(torrent.Tags, tag) {
