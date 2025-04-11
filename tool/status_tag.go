@@ -21,7 +21,7 @@ func StatusTag(c *config.Config, torrent *qbittorrent.Torrent) {
 	tag := ""
 	miss := make(map[string]int, 0)
 	for _, tracker := range trackerList {
-		if tracker.Status == 2 || tracker.Msg == "" {
+		if tracker.Status != 4 || tracker.Msg == "" {
 			return
 		}
 
